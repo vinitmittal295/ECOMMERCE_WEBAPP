@@ -16,7 +16,9 @@ const Register = () => {
     const handlseSubmit=async (e)=>{
         e.preventDefault()
         try {
-            const res=await axios.post("/api/v1/auth/register",{name,email,password,phone,address})
+            const res=await axios.post("http://localhost:8080/api/v1/auth/register",{name,email,password,phone,address})
+            console.log(res.data);
+            
             if (res.data.success) {
                 toast.success(res.data.message)
                 navigate("/login")
