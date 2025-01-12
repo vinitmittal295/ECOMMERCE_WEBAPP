@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Layout from "./../../components/Layout/Layout.js";
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import axios from "axios";
 import { useAuth } from "../../context/Auth.js";
 
@@ -12,6 +12,7 @@ const Login = () => {
 
   const [auth, setAuth ] = useAuth();
   const navigate = useNavigate();
+  const location=useLocation()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ const Login = () => {
       
 
       // Log the response to inspect it
-      console.log("Login response:", res.data);
+      console.log("Login response from api:", res.data);
 
       if (res && res.data.success) {
         toast.success(res.data.message);
@@ -37,13 +38,13 @@ const Login = () => {
         }));
 
         // Navigate to the homepage or dashboard
-        navigate("/");
+        navigate(location.state || "/");
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred during login. Please try again.");
+      console.error("Login error from catch:", error);
+      toast.error("An error showing from toast occurred during login . Please try again.");
     }
   };
 
